@@ -1,0 +1,1397 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Below the Surface · Theme Lab</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Fraunces:opsz,wght@9..144,600;9..144,800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#10273a;--deep:#0b3954;--abyss:#06223a;--sea:#087e8b;--sea2:#5fb8c2;--ice:#e6f4f6;--foam:#f6fbfc;
+  --coral:#f25f4c;--sun:#ffc857;--ok:#1f8f63;--okbg:#e2f4ea;--bad:#c23b3b;--badbg:#fbe8e6;
+  --muted:#58707f;--line:#cfe1e6;--card:#ffffff;
+  --want:#f25f4c;--conflict:#d9921a;--change:#087e8b;--final:#6b4fbb;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{font-family:'Atkinson Hyperlegible',system-ui,-apple-system,Segoe UI,sans-serif;color:var(--ink);background:var(--foam);font-size:18px;line-height:1.55}
+h1,h2,h3{font-family:'Fraunces',Georgia,serif;line-height:1.15;margin:.2em 0 .45em;letter-spacing:-.01em}
+h2{font-size:28px}h3{font-size:21px}
+button{font:inherit;cursor:pointer;color:inherit}
+button:focus-visible,textarea:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid var(--sun);outline-offset:2px}
+.top{position:sticky;top:0;z-index:30;display:flex;align-items:center;gap:10px;padding:10px 16px;background:var(--deep);color:#fff;box-shadow:0 2px 10px rgba(0,0,0,.15)}
+.brand{font-family:Fraunces,Georgia,serif;font-weight:800;font-size:20px;flex:1;cursor:pointer;background:none;border:0;text-align:left;color:#fff;padding:0}
+.brand small{display:block;font-family:'Atkinson Hyperlegible',sans-serif;font-weight:400;font-size:11px;opacity:.75;letter-spacing:.08em;text-transform:uppercase}
+.tbtn{background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.28);color:#fff;border-radius:999px;padding:6px 12px;font-size:14px;white-space:nowrap}
+.tbtn:hover{background:rgba(255,255,255,.22)}
+.who{font-size:13px;opacity:.85;white-space:nowrap}
+main{max-width:860px;margin:0 auto;padding:20px 16px 130px}
+
+/* start */
+.hero{background:linear-gradient(180deg,#bfe6ec 0%,#bfe6ec 38%,var(--sea) 38.2%,var(--deep) 75%,var(--abyss) 100%);border-radius:22px;color:#fff;padding:0;overflow:hidden;position:relative}
+.hero svg{display:block;width:100%;height:auto}
+.hero .inner{padding:4px 24px 26px}
+.hero h1{font-size:40px;margin:0 0 6px}
+.hero p{margin:0 0 6px;opacity:.92}
+.form{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:20px;margin-top:18px}
+.form label{display:block;font-weight:700;margin:10px 0 4px}
+.form input,.form select{width:100%;font:inherit;padding:12px 14px;border:2px solid var(--line);border-radius:12px;background:#fff}
+.btn{background:var(--coral);color:#fff;border:0;border-radius:12px;padding:12px 22px;font-weight:700;font-size:18px;box-shadow:0 3px 0 #c8473a}
+.btn:hover{filter:brightness(1.05)}
+.btn:active{transform:translateY(2px);box-shadow:0 1px 0 #c8473a}
+.btn[disabled]{background:#b7c6cd;box-shadow:none;cursor:not-allowed}
+.btn.sea{background:var(--sea);box-shadow:0 3px 0 #05606a}
+.btn.ghost{background:#fff;color:var(--deep);border:2px solid var(--line);box-shadow:none}
+.small{font-size:14px;color:var(--muted)}
+.linkbtn{background:none;border:0;color:var(--muted);text-decoration:underline;font-size:14px;padding:4px}
+
+/* map */
+.dive{border-radius:22px;overflow:hidden;background:linear-gradient(180deg,#bfe6ec 0,#bfe6ec 120px,#5fb8c2 121px,var(--sea) 30%,var(--deep) 65%,var(--abyss) 100%);padding:0 0 22px;position:relative}
+.dive .berg{display:block;width:100%;height:auto}
+.stations{padding:0 16px;display:grid;gap:14px;position:relative}
+.station{display:grid;grid-template-columns:76px 1fr auto;gap:14px;align-items:center;background:rgba(255,255,255,.95);border-radius:16px;padding:14px 16px;border:0;text-align:left;box-shadow:0 6px 18px rgba(0,0,0,.15);transition:transform .15s}
+.station:hover:not([disabled]){transform:translateY(-2px)}
+.station[disabled]{background:rgba(255,255,255,.35);color:rgba(255,255,255,.9);cursor:not-allowed;box-shadow:none}
+.station .depth{font-family:Fraunces,serif;font-weight:800;font-size:15px;text-align:center;color:var(--sea);line-height:1.1}
+.station[disabled] .depth{color:#fff}
+.station .depth b{display:block;font-size:30px}
+.station h3{margin:0;font-size:20px}
+.station p{margin:2px 0 0;font-size:15px;color:var(--muted)}
+.station[disabled] p{color:rgba(255,255,255,.85)}
+.stars{font-size:22px;letter-spacing:2px;color:var(--sun);white-space:nowrap}
+.stars .off{color:#d5dee2}
+.lock{font-size:24px}
+.maphead{color:var(--deep);padding:0 4px 8px}
+
+/* level */
+.lvhead{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin-bottom:6px}
+.lvtag{background:var(--deep);color:#fff;border-radius:999px;padding:4px 12px;font-size:13px;letter-spacing:.05em;text-transform:uppercase}
+.dots{display:flex;gap:6px;flex:1;min-width:140px}
+.dots i{height:8px;flex:1;border-radius:6px;background:var(--line)}
+.dots i.done{background:var(--sea)}
+.dots i.now{background:var(--coral)}
+.stepcard{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:22px;box-shadow:0 4px 18px rgba(11,57,84,.06)}
+.prompt{font-size:21px;font-weight:700;margin:0 0 14px}
+.steplabel{font-size:13px;letter-spacing:.08em;text-transform:uppercase;color:var(--sea);font-weight:700;margin-bottom:6px}
+.footer{position:fixed;left:0;right:0;bottom:0;background:rgba(246,251,252,.96);border-top:1px solid var(--line);padding:12px 16px;z-index:25}
+.footer .in{max-width:860px;margin:0 auto;display:flex;gap:10px;align-items:center;justify-content:space-between}
+
+/* story */
+.story{font-size:19px;line-height:1.75}
+.story .shead{display:flex;align-items:flex-start;gap:10px;justify-content:space-between;flex-wrap:wrap;border-bottom:2px dashed var(--line);margin-bottom:12px;padding-bottom:8px}
+.story .stitle{font-family:Fraunces,serif;font-weight:800;font-size:28px;margin:0}
+.story .sby{font-size:14px;color:var(--muted)}
+.story p{margin:0 0 14px}
+.badge{display:inline-block;font-size:12px;font-weight:700;letter-spacing:.06em;text-transform:uppercase;border-radius:6px;padding:2px 8px;background:var(--ice);color:var(--sea);margin-bottom:4px}
+.badge.classic{background:#fff1d1;color:#8a5a00}
+.moral{background:#fff7e0;border-left:5px solid var(--sun);padding:12px 16px;border-radius:8px;font-weight:700}
+.listen{background:var(--ice);border:1px solid var(--line);border-radius:999px;padding:6px 14px;font-size:15px;color:var(--deep)}
+.gl{background:none;border:0;padding:0;font:inherit;color:inherit;border-bottom:2px dotted var(--sea);cursor:help}
+.note{background:var(--ice);border-radius:14px;padding:12px 16px;margin-bottom:16px;font-size:17px}
+.note b{color:var(--deep)}
+#pop{position:absolute;z-index:60;max-width:280px;background:var(--deep);color:#fff;border-radius:12px;padding:10px 14px;font-size:15px;box-shadow:0 8px 24px rgba(0,0,0,.25);display:none}
+#pop b{color:var(--sun)}
+
+/* tap mode */
+.tapmode .snt{cursor:pointer;border-radius:5px;padding:1px 2px;transition:background .15s}
+.tapmode .snt:hover{background:#fff3c4}
+.snt.marked{background:color-mix(in srgb,var(--c) 18%,white);box-shadow:inset 0 -3px 0 var(--c)}
+.snt.nope{animation:shake .45s;background:var(--badbg)}
+@keyframes shake{0%,100%{transform:translateX(0)}25%{transform:translateX(-4px)}75%{transform:translateX(4px)}}
+.board{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin-bottom:14px}
+.slot{border:2px dashed color-mix(in srgb,var(--c) 55%,white);border-radius:14px;padding:10px 12px;background:#fff;min-height:96px}
+.slot.filled{border-style:solid;border-color:var(--c);background:color-mix(in srgb,var(--c) 8%,white)}
+.slot.active{box-shadow:0 0 0 4px color-mix(in srgb,var(--c) 30%,white)}
+.slothead{font-weight:700;color:var(--c);font-size:15px;text-transform:uppercase;letter-spacing:.05em}
+.slotbody{font-size:14px;color:var(--muted);margin-top:4px}
+.slot.filled .slotbody{color:var(--ink);font-style:italic}
+.tapq{position:sticky;top:62px;z-index:5;background:var(--deep);color:#fff;border-radius:14px;padding:12px 16px;margin-bottom:14px}
+.tapq .hint{color:var(--sun);font-size:16px;margin-top:4px}
+.tapq .exp{font-size:15px;opacity:.9;margin-top:6px;border-top:1px solid rgba(255,255,255,.2);padding-top:6px}
+
+/* mc */
+blockquote{margin:0 0 14px;padding:12px 16px;border-left:5px solid var(--sea);background:var(--ice);border-radius:8px;font-style:italic}
+.opts{display:grid;gap:10px}
+.opt{display:flex;gap:12px;align-items:flex-start;text-align:left;background:#fff;border:2px solid var(--line);border-radius:14px;padding:12px 14px;font-size:18px}
+.opt:hover:not([disabled]){border-color:var(--sea2);background:#fbfeff}
+.opt .let{flex:none;width:30px;height:30px;border-radius:50%;background:var(--ice);display:grid;place-items:center;font-weight:700;color:var(--deep)}
+.opt.right{border-color:var(--ok);background:var(--okbg)}
+.opt.right .let{background:var(--ok);color:#fff}
+.opt.wrong{border-color:var(--bad);background:var(--badbg);opacity:.85}
+.opt.wrong .let{background:var(--bad);color:#fff}
+.opt[disabled]{cursor:default}
+.fb{margin-top:14px;border-radius:12px;padding:0;font-size:17px}
+.fb.show{padding:12px 16px}
+.fb.good{background:var(--okbg);border-left:5px solid var(--ok)}
+.fb.bad{background:var(--badbg);border-left:5px solid var(--bad)}
+.fb.info{background:var(--ice);border-left:5px solid var(--sea)}
+
+/* sort */
+.pool{display:flex;flex-wrap:wrap;gap:8px;min-height:64px;padding:12px;border:2px dashed var(--line);border-radius:14px;margin-bottom:14px;background:#fbfdfe}
+.pool:empty::after{content:'All cards placed. Press Check!';color:var(--muted);font-size:15px;align-self:center}
+.bins{display:grid;gap:12px}
+.bins.b2{grid-template-columns:1fr 1fr}
+.bins.b3{grid-template-columns:1fr 1fr 1fr}
+@media (max-width:640px){.bins.b2,.bins.b3{grid-template-columns:1fr}}
+.bin{border:2px solid var(--line);border-radius:16px;background:#fff;min-height:150px;display:flex;flex-direction:column;cursor:pointer;transition:border-color .15s,background .15s}
+.bin.armed{border-color:var(--coral);background:#fff8f6}
+.bin.over{border-color:var(--sea);background:var(--ice)}
+.binhead{padding:10px 12px;border-bottom:1px solid var(--line);background:var(--ice);border-radius:14px 14px 0 0}
+.binhead b{display:block;font-family:Fraunces,serif;font-size:19px;color:var(--deep)}
+.binhead span{font-size:13px;color:var(--muted)}
+.binbody{padding:10px;display:flex;flex-direction:column;gap:8px;flex:1}
+.card{background:#fff;border:2px solid var(--deep);border-radius:12px;padding:8px 12px;font-size:16px;text-align:left;box-shadow:0 2px 0 var(--deep);max-width:100%}
+.card.sel{background:var(--sun);transform:translateY(-2px)}
+.card.right{border-color:var(--ok);box-shadow:0 2px 0 var(--ok);background:var(--okbg);cursor:default}
+.card.wrong{border-color:var(--bad);box-shadow:0 2px 0 var(--bad);background:var(--badbg)}
+.armedtip{font-size:15px;color:var(--coral);font-weight:700;min-height:22px;margin-bottom:6px}
+
+/* judge */
+.jrow{border:2px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:10px;background:#fff}
+.jrow.done{border-color:var(--ok);background:var(--okbg)}
+.jtext{font-size:18px;font-weight:700;margin-bottom:8px}
+.jbtns{display:flex;flex-wrap:wrap;gap:6px}
+.jb{border:2px solid var(--line);background:#fff;border-radius:999px;padding:5px 12px;font-size:15px}
+.jb:hover:not([disabled]){border-color:var(--sea)}
+.jb.right{background:var(--ok);border-color:var(--ok);color:#fff}
+.jb.wrong{background:var(--badbg);border-color:var(--bad);color:var(--bad)}
+.jexp{font-size:15px;margin-top:8px}
+
+/* builder */
+.build{font-size:22px;font-family:Fraunces,serif;font-weight:600;background:var(--ice);border-radius:14px;padding:16px;margin-bottom:14px;line-height:1.6}
+.blank{display:inline-block;min-width:140px;border-bottom:3px solid var(--deep);color:var(--sea);padding:0 4px}
+.blank.empty{color:#9fb2bb}
+.cols{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+@media (max-width:640px){.cols{grid-template-columns:1fr}}
+.col h4{margin:0 0 6px;font-size:15px;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.chipbtn{display:block;width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:12px;padding:10px 12px;margin-bottom:8px;font-size:16px}
+.chipbtn.on{border-color:var(--sea);background:var(--ice);font-weight:700}
+
+/* multi */
+.mopt{display:flex;gap:12px;align-items:flex-start;width:100%;text-align:left;background:#fff;border:2px solid var(--line);border-radius:14px;padding:12px 14px;margin-bottom:10px;font-size:18px}
+.mopt .box{flex:none;width:26px;height:26px;border-radius:7px;border:2px solid var(--deep);display:grid;place-items:center;font-weight:700}
+.mopt.on{border-color:var(--sea);background:var(--ice)}
+.mopt.on .box{background:var(--sea);border-color:var(--sea);color:#fff}
+.mopt.right{border-color:var(--ok);background:var(--okbg)}
+.mopt.wrong{border-color:var(--bad);background:var(--badbg)}
+.mfb{display:block;font-size:15px;margin-top:4px;color:var(--bad)}
+
+/* write */
+.field{margin-bottom:18px}
+.field label{display:block;font-weight:700;color:var(--deep);margin-bottom:4px}
+.field .frame{font-size:15px;color:var(--muted);margin-bottom:6px}
+.field textarea{width:100%;min-height:86px;font:inherit;font-size:18px;padding:12px;border:2px solid var(--line);border-radius:12px;resize:vertical;background:#fff}
+.field textarea:disabled{background:#f3f7f8;color:var(--ink)}
+.checks{display:flex;flex-wrap:wrap;gap:6px;margin-top:6px}
+.ck{font-size:13px;border-radius:999px;padding:3px 10px;background:#eef3f5;color:var(--muted)}
+.ck.ok{background:var(--okbg);color:var(--ok)}
+.ck.warn{background:#fff1d6;color:#8a5a00}
+.wc{font-size:13px;color:var(--muted);margin-top:4px}
+.frames{background:#fff8e6;border:1px solid #f3dfa5;border-radius:14px;padding:12px 16px;margin-bottom:16px}
+.frames b{display:block;margin-bottom:4px;color:#8a5a00}
+.frames ul{margin:0;padding-left:20px}
+.frames li{margin:2px 0}
+
+/* concept */
+.concept svg{display:block;width:100%;height:auto;margin:6px 0 12px}
+.def{background:var(--deep);color:#fff;border-radius:14px;padding:14px 18px;font-size:19px;margin:12px 0}
+.def b{color:var(--sun)}
+.twocol{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:12px 0}
+@media (max-width:640px){.twocol{grid-template-columns:1fr}}
+.panel{border:2px solid var(--line);border-radius:16px;padding:14px;background:#fff}
+.panel h3{margin-top:0}
+.chain{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:12px 0}
+.link{border-radius:14px;padding:12px;color:#fff}
+.link b{display:block;font-size:20px;font-family:Fraunces,serif}
+.flips{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:12px 0}
+.flip{perspective:800px;background:none;border:0;padding:0;min-height:140px;text-align:left}
+.flip .fi{position:relative;width:100%;height:100%;min-height:140px;transition:transform .5s;transform-style:preserve-3d}
+.flip.on .fi{transform:rotateY(180deg)}
+.flip .fa,.flip .fb2{position:absolute;inset:0;backface-visibility:hidden;border-radius:14px;padding:12px;display:flex;flex-direction:column;justify-content:center}
+.flip .fa{background:var(--coral);color:#fff}
+.flip .fa.strong{background:var(--ok)}
+.flip .fa b{font-family:Fraunces,serif;font-size:20px}
+.flip .fa span{font-size:13px;opacity:.9}
+.flip .fb2{background:#fff;border:2px solid var(--line);transform:rotateY(180deg);font-size:16px}
+.flip .fb2 i{color:var(--muted);font-size:13px;font-style:normal;display:block;margin-top:4px}
+.recipe{list-style:none;padding:0;margin:10px 0}
+.recipe li{padding:6px 0 6px 34px;position:relative}
+.recipe li::before{content:'✓';position:absolute;left:4px;top:4px;width:24px;height:24px;border-radius:50%;background:var(--ok);color:#fff;display:grid;place-items:center;font-size:14px;font-weight:700}
+
+/* drawers, modal, toast */
+#drawer{position:fixed;inset:0;z-index:50;display:none}
+#drawer.open{display:block}
+#drawer .bg{position:absolute;inset:0;background:rgba(6,34,58,.45)}
+#drawer .panel2{position:absolute;right:0;top:0;bottom:0;width:min(560px,100%);background:var(--foam);overflow:auto;padding:18px 18px 40px;box-shadow:-8px 0 30px rgba(0,0,0,.2)}
+#drawer .x{float:right}
+.vocab dt{font-weight:700;color:var(--deep);margin-top:8px}
+.vocab dd{margin:0 0 4px}
+#modal{position:fixed;inset:0;z-index:70;display:none;place-items:center;background:rgba(6,34,58,.6);padding:16px}
+#modal.open{display:grid}
+#modal .box{background:#fff;border-radius:22px;padding:28px;max-width:520px;width:100%;text-align:center}
+#modal .big{font-size:54px;letter-spacing:6px;color:var(--sun)}
+#toast{position:fixed;left:50%;bottom:90px;transform:translateX(-50%);background:var(--deep);color:#fff;padding:10px 18px;border-radius:999px;font-size:16px;z-index:80;opacity:0;pointer-events:none;transition:opacity .25s}
+#toast.show{opacity:1}
+.cert{border:4px double var(--deep);border-radius:16px;padding:18px;margin:12px 0}
+@media (max-width:640px){
+  body{font-size:17px}
+  .hero h1{font-size:32px}
+  .station{grid-template-columns:60px 1fr auto;gap:10px;padding:12px}
+  .station .depth b{font-size:24px}
+  .stepcard{padding:16px}
+  .who{display:none}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
+</style>
+</head>
+<body>
+<header class="top">
+  <button class="brand" id="brand" aria-label="Back to the dive map">Below the Surface<small>Theme Lab · Mr. V's Literacy</small></button>
+  <span class="who" id="who"></span>
+  <button class="tbtn" id="toolkitBtn">🧰 Toolkit</button>
+</header>
+<main id="app"></main>
+<div id="pop" role="tooltip"></div>
+<div id="drawer" aria-hidden="true"><div class="bg"></div><div class="panel2" id="drawerBody"></div></div>
+<div id="modal" role="dialog" aria-modal="true"><div class="box" id="modalBody"></div></div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>
+/* =========================================================
+   CONFIG
+   ========================================================= */
+const LOG_URL = "https://script.google.com/macros/s/AKfycbwV7Hd_JRL54Xbxm2tiAFx3kWm_WFO5nxSotzCD0PiAuEYtx4Z3AlTQ3UwwJYrsOKS6/exec";
+const APP = "Below the Surface: Theme Lab";
+const TEACHER_CODE = "deepdive";
+
+/* =========================================================
+   STORIES
+   Sentences: plain string, or {k:"key key", t:"text"} for tap targets.
+   Glossary: [[word|definition]]
+   ========================================================= */
+const STORIES = {
+fox:{
+  title:"The Fox and the Grapes", by:"A fable by Aesop (retold) · Ancient Greece, about 2,500 years ago", badge:"Classic", classic:true,
+  paras:[
+    ["On a hot afternoon, a hungry Fox wandered into a [[vineyard|a farm where grapes are grown]].","High above him, a bunch of ripe purple grapes hung from a vine, heavy with juice."],
+    ["The Fox backed up, ran, and jumped.","He missed.","He tried again, and again, and again, each jump a little weaker than the last.","At last he sat down, [[out of breath|breathing hard from too much effort]]."],
+    ["He looked up at the grapes for a long moment.","Then he lifted his nose in the air and walked away.","“I didn’t want them anyway,” he said.","“Those grapes are probably sour.”"]
+  ],
+  moral:"Moral: It is easy to pretend you don’t want what you can’t have."
+},
+sour:{
+  title:"Sour", by:"An original modern story", badge:"Modern",
+  paras:[
+    ["The list went up on the gym door at 3:05.","Marcus read it from top to bottom twice.","Then he read it from bottom to top, in case the names had somehow moved.","They hadn’t.","His name wasn’t there."],
+    ["On the bus, his cousin Dani slid into the seat next to him.","“So? Did you make it?”"],
+    ["Marcus shrugged and stared out the window.","“I didn’t even really try,” he said.","“[[Travel basketball|a competitive team that plays against teams from other towns]] is a waste of time. Practice four days a week? Who wants that?”"],
+    ["Dani [[raised an eyebrow|made a face that shows she did not believe him]].","“You practiced in the driveway every night this summer. In the rain. I watched you.”"],
+    ["“That was just for fun.”"],
+    ["That night, Marcus’s mom heard a familiar sound from the driveway: thump, thump, swish.","She looked out the window.","Her son was shooting free throws under the porch light, one after another, long after it got dark."]
+  ]
+},
+levelten:{
+  title:"Level Ten", by:"An original story", badge:"Modern",
+  paras:[
+    ["Ana had been at Westbrook Middle School for nine days, and she had eaten lunch in the library for eight of them."],
+    ["On the ninth day, she carried her tray to the long table by the windows, where four kids were arguing about a video game called Skyforge."],
+    ["“Do you play?” a boy named Theo asked."],
+    ["Ana had never played Skyforge.","She had never even heard of it.",{k:"want",t:"But more than anything, she wanted a seat at this table that she didn’t have to give back."}],
+    ["“Yeah,” she said. “All the time.”"],
+    ["“Nice!” Theo slid over to make room."],
+    ["For the next week, Ana spent every night watching Skyforge videos on her phone, learning words like “[[respawn|in a video game, to come back to life after losing]]” and “loot drop” so she could nod at the right moments.","At lunch, she laughed when the others laughed.","She asked questions that sounded like she already knew the answers.",{k:"conflict",t:"It was [[exhausting|making you feel extremely tired]], like taking a test every single day."}],
+    ["Then, on Friday, Priya leaned across the table.",{k:"conflict",t:"“We’re all playing online tomorrow at noon. What’s your [[username|the name you use for an online account]]? We’ll add you.”"}],
+    [{k:"conflict",t:"Ana’s stomach dropped."},{k:"conflict",t:"She didn’t have a username."},{k:"conflict",t:"She didn’t even have the game."}],
+    [{k:"conflict",t:"That night she typed three different excuses into her phone and deleted all of them."}],
+    [{k:"change",t:"On Monday, she sat down at the table, took a breath, and said, “I have to tell you something. I’ve never played Skyforge. I just didn’t want to eat in the library anymore.”"}],
+    ["Nobody said anything for a second.","Then Priya started laughing, but not in a mean way."],
+    ["“Theo, tell her,” she said."],
+    ["Theo turned red.","“I pretended to like soccer for my whole first year here,” he said.","“I still don’t know what offside means.”"],
+    [{k:"final",t:"“So,” Priya said, pulling out her phone, “do you want to learn? It’s easier than pretending.”"}],
+    ["Ana did want to learn.",{k:"final",t:"But walking out of the cafeteria that day, she realized the game had never really been the point."},{k:"final",t:"For the first time in two weeks, she didn’t feel like she was taking a test."}]
+  ]
+},
+tomato:{
+  title:"The Tomato Job", by:"An original story", badge:"Modern",
+  paras:[
+    ["When Mrs. Okafor next door broke her wrist, Jayden’s mom [[volunteered|offered to do something; here, she offered Jayden’s help without asking him]] him to water her garden every day for a month.","Jayden did not volunteer himself."],
+    ["“A month?” he said. “That’s my whole summer.”"],
+    ["“It’s thirty days,” his mom said. “Your summer will survive.”"],
+    ["The garden was bigger than it looked from the street: six rows of tomatoes, two of peppers, and a tangle of prickly leaves that Jayden later learned was squash.","The hose leaked.","The mosquitoes found him every evening at exactly 7:15.","For the first week, he watered as fast as he could, checked the box, and left."],
+    ["Then one afternoon he noticed that the smallest tomato plant, the one at the end of the row, was leaning over, its stem bent almost to the dirt.","He almost ignored it.","Instead, he found a stick and some string in the garage and tied the plant up straight, the way he had seen Mrs. Okafor do it through the fence."],
+    ["The next day, he checked on it first."],
+    ["By the third week, he was coming over before dinner without being reminded.","He learned which plants [[drooped|hung down weakly]] when they were thirsty and which ones only pretended to.","He started saying “my tomatoes” without noticing."],
+    ["On day thirty, Mrs. Okafor came out on her porch, her arm still in a [[cast|a hard cover that protects a broken bone while it heals]], and looked at the rows for a long time."],
+    ["“You can stop now,” she said. “My daughter can help me from here.”"],
+    ["Jayden nodded.","Then he heard himself ask, “Can I still come by? Just to check on the little one?”"],
+    ["Mrs. Okafor smiled like she had been waiting for that question all month."]
+  ]
+},
+bench:{
+  title:"The Bench", by:"An original story · Story A", badge:"Story A",
+  paras:[
+    ["Sofia had played in four games all season, for a total of eleven minutes.","She knew the exact number because she counted."],
+    ["At first, sitting on the bench felt like a punishment.","She cheered when she was supposed to and stared at the floor when she wasn’t.","But somewhere around the sixth game, out of boredom, she started watching the other team the way you watch a movie you’ve already seen: looking for patterns."],
+    ["Their [[point guard|the player who brings the ball up the court and starts the plays]] always dribbled left before she passed.","Their tallest player never came out to defend the corner.","Number 22 got tired by the third quarter and stopped running back."],
+    ["Sofia started writing it all down on the back of her water bottle label."],
+    ["During a [[timeout|a short break in the game when the coach talks to the team]] in the [[semifinal|the game right before the championship game]], she heard Coach Reyes say, “I don’t know what they’re doing out there. We can’t stop them.”"],
+    ["Sofia’s heart was pounding.","Benchwarmers did not talk during timeouts.","She held up the label anyway.","“Their point guard always goes left,” she said. “Every time.”"],
+    ["Coach Reyes looked at her for a long second.","Then she turned to the team. “Force her right.”"],
+    ["They won by four."],
+    ["Sofia still didn’t get in the game.","But at the next practice, Coach Reyes handed her a clipboard and a pen.","“You’re on [[scouting|studying the other team to learn their habits]],” she said. “Starting now.”"],
+    ["Sofia had spent the whole season waiting to be seen.","It turned out she had been the one doing the seeing."]
+  ]
+},
+eleventh:{
+  title:"Eleventh Place", by:"An original story · Story B", badge:"Story B",
+  paras:[
+    ["Malik had built most of the robot himself, and everyone on the team knew it, because Malik told them."],
+    ["When Grace suggested a wider base so the robot wouldn’t tip on the ramp, Malik said, “I already thought of that.”","He hadn’t.","When Daniel offered to rewrite the turning code, Malik said, “It’s faster if I just do it.”"],
+    ["After a while, they stopped offering.","Grace started doing homework during meetings.","Daniel stopped coming."],
+    ["At the [[regional competition|a contest between teams from schools in the same area]], the robot made it halfway up the ramp, wobbled, and tipped over on its side.","The crowd made a [[sympathetic|showing that they felt sorry for someone]] “ohhh.”","Malik ran to fix it.","There were three minutes on the clock and one person working."],
+    ["They finished eleventh out of twelve."],
+    ["On the bus home, nobody talked.","Malik stared at the robot in his lap.","Its base was exactly as narrow as he had built it."],
+    ["“Grace,” he said finally.","She took out one earbud.","“The wider base. How would you have done it?”"],
+    ["Grace looked at him like she was trying to decide whether he was serious.","Then she pulled out a notebook, flipped past her math homework, and showed him a drawing she had made back in October."],
+    ["It was good.","It was better than good."],
+    ["“Do you think Daniel would come back?” Malik asked. “If I asked him?”"],
+    ["Grace almost smiled. “Only one way to find out.”"],
+    ["For the first time all season, Malik wasn’t in a hurry to be the one with the answer."]
+  ]
+},
+battery:{
+  title:"The Battery", by:"An original story", badge:"Final Case",
+  paras:[
+    ["Nina’s video channel had 212 [[subscribers|people who follow a channel to see new videos]], and she was pretty sure at least forty of them were real people."],
+    ["“Grandpa Lou’s 80th Birthday [[VLOG|a video diary posted online]]” was going to change that.","She had planned it for two weeks: the shot list taped inside her closet door, the clip-on microphone she had bought with babysitting money, the opening line she had practiced in the mirror.","(“What’s up, everybody — today is a VERY special day.”)"],
+    ["The party was in her aunt’s backyard.","Nina filmed the balloons.","She filmed the cake, from three angles.","She filmed her cousins dancing badly and made a mental note to speed it up and add music.","Every few minutes, she checked the screen to see how it looked."],
+    ["“Nina,” Grandpa Lou called from his lawn chair. “Come sit.”"],
+    ["“One sec, Grandpa! I’m getting [[B-roll|extra background video clips used when editing]].”"],
+    ["He laughed like he didn’t know what B-roll was, which he didn’t."],
+    ["After the cake, someone handed Grandpa Lou a small silver [[harmonica|a small instrument you play by blowing and breathing into it]], dented on one corner.","The whole backyard got quiet.","Nina’s mom whispered, “He hasn’t played that in years.”"],
+    ["Nina scrambled for the best angle.","She crouched in front of his chair, phone held steady, [[framing|arranging what shows up inside the camera’s picture]] his face perfectly against the string lights.","This was it.","This was the shot."],
+    ["Grandpa Lou raised the harmonica — and the phone screen went black."],
+    [{k:"turn",t:"Battery 0%."}],
+    ["Nina stared at the dark glass.","She saw her own reflection in it: mouth open, eyes wide, completely ridiculous."],
+    [{k:"turn",t:"And then the music started."}],
+    ["It was a slow, wobbly song she had never heard before.","Grandpa Lou played with his eyes closed.","Halfway through, he stopped and said, to no one in particular, “I played this the night I met your grandmother. I was terrible. She danced anyway.”","Then he kept going."],
+    [{k:"turn",t:"Nina didn’t move."},{k:"turn",t:"She was still crouched in the grass, holding a dead phone, and for the first time all afternoon she wasn’t thinking about angles or music or subscribers."},"She was just watching her grandfather’s hands, the way they shook a little, the way his foot tapped one beat behind the song."],
+    ["When it ended, everyone clapped.","Grandpa Lou opened his eyes and found her right in front of him."],
+    ["“Did you get it?” her cousin Ray called. “For the channel?”"],
+    ["Nina looked at the black screen.","“No,” she said.","Then, a little surprised: “I got it.”"],
+    ["Later, when the guests were gone and the string lights were the only thing still on, Grandpa Lou pressed the harmonica into her hand."],
+    ["“I don’t know how to play,” Nina said."],
+    ["“Neither did I,” he said. “That’s never been the point.”"],
+    [{k:"last",t:"Nina didn’t post a video that week."},{k:"last",t:"Instead, she found a beginner’s [[tutorial|a lesson that shows you how to do something step by step]] online, and every night she sat on her bedroom floor and played the same three wobbly notes, over and over, trying to get them right before his next visit."}],
+    [{k:"last",t:"The phone stayed on the charger, across the room."}]
+  ]
+}
+};
+
+/* =========================================================
+   VISUALS
+   ========================================================= */
+const BERG_SVG = `<svg viewBox="0 0 600 270" role="img" aria-label="An iceberg: the small tip above water is the plot, the huge part below is the theme">
+<defs><linearGradient id="wat" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#5fb8c2"/><stop offset="1" stop-color="#0b3954"/></linearGradient></defs>
+<rect width="600" height="80" fill="#cdeef2"/><rect y="80" width="600" height="190" fill="url(#wat)"/>
+<path d="M0 80 Q 75 72 150 80 T 300 80 T 450 80 T 600 80" fill="none" stroke="#fff" stroke-width="3" opacity=".8"/>
+<polygon points="250,80 285,22 312,44 340,14 372,80" fill="#fff"/>
+<polygon points="250,80 372,80 450,140 420,215 330,255 220,240 160,170 190,110" fill="#dff4f7" opacity=".55"/>
+<text x="400" y="40" font-family="Fraunces,Georgia,serif" font-size="20" font-weight="800" fill="#0b3954">PLOT</text>
+<text x="400" y="60" font-family="Atkinson Hyperlegible,sans-serif" font-size="14" fill="#0b3954">what happens</text>
+<line x1="395" y1="44" x2="350" y2="44" stroke="#0b3954" stroke-width="2"/>
+<text x="250" y="175" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="28" font-weight="800" fill="#0b3954">THEME</text>
+<text x="250" y="198" text-anchor="middle" font-family="Atkinson Hyperlegible,sans-serif" font-size="15" fill="#0b3954">what it means</text>
+<text x="40" y="110" font-family="Atkinson Hyperlegible,sans-serif" font-size="13" fill="#fff" opacity=".85">surface</text>
+</svg>`;
+
+const MAP_SVG = `<svg class="berg" viewBox="0 0 800 200" aria-hidden="true">
+<rect width="800" height="120" fill="#bfe6ec"/>
+<circle cx="690" cy="46" r="26" fill="#ffc857" opacity=".9"/>
+<rect y="120" width="800" height="80" fill="#5fb8c2"/>
+<path d="M0 120 Q 100 112 200 120 T 400 120 T 600 120 T 800 120" fill="none" stroke="#fff" stroke-width="3" opacity=".85"/>
+<polygon points="300,120 345,40 372,66 405,22 450,120" fill="#ffffff"/>
+<polygon points="300,120 450,120 520,200 230,200" fill="#e2f6f9" opacity=".6"/>
+<text x="40" y="60" font-family="Fraunces,Georgia,serif" font-size="30" font-weight="800" fill="#0b3954">Dive Map</text>
+<text x="40" y="86" font-family="Atkinson Hyperlegible,sans-serif" font-size="16" fill="#0b3954">The deeper you go, the deeper the meaning.</text>
+</svg>`;
+
+/* =========================================================
+   LEVELS
+   ========================================================= */
+const CATS = [
+  {id:"strong",l:"Strong ✓"},
+  {id:"topic",l:"Just a topic"},
+  {id:"summary",l:"Just a summary"},
+  {id:"bossy",l:"Bossy command"},
+  {id:"stuck",l:"Stuck in the story"}
+];
+
+const LEVELS = {
+1:{ name:"The Surface", short:"Told vs. Shown", depth:"0", unit:"m",
+  desc:"Topic vs. theme · a 2,500-year-old fable meets a modern story",
+  stories:["fox","sour"],
+  steps:[
+    {type:"concept", label:"Two layers", html:`
+      <div class="concept">
+      <div class="steplabel">Before you dive</div>
+      <h2>Every story has two layers</h2>
+      ${BERG_SVG}
+      <p><b>Above the surface</b> is the <b>plot</b>: what happens. Anyone can see it.</p>
+      <p><b>Below the surface</b> is the <b>theme</b>: the message about life that the story wants you to understand. You have to dive for it.</p>
+      <div class="def"><b>Theme</b> = a message about life or people that a story shows. It is true <i>outside</i> the story, too.</div>
+      <p>Your first stop is a story that is about 2,500 years old.</p>
+      </div>`},
+    {type:"read", story:"fox", label:"Read: the fable",
+      note:"<b>Aesop</b> told short stories called <b>fables</b> in ancient Greece. Fables use animals to teach a lesson, and they usually <b>tell</b> you the lesson at the end. Tap any dotted word to see what it means."},
+    {type:"mc", id:"L1-fable-moral", label:"Question",
+      q:"In the fable, how do you learn the lesson?",
+      opts:[
+        {t:"Aesop states it directly at the end, in the moral.", ok:true, fb:"Yes! Fables <b>tell</b> you the lesson. The moral is the theme, written out for you."},
+        {t:"The Fox says the lesson out loud.", fb:"Not quite. The Fox is making an excuse, not teaching a lesson. Look at the line after the story."},
+        {t:"There is no lesson. You have to guess.", fb:"Look again. There is a line at the very end that tells you the lesson directly."},
+        {t:"The grapes explain it.", fb:"The grapes don’t talk! Look at the line at the very end, after the story."}
+      ]},
+    {type:"read", story:"sour", label:"Read: the modern story",
+      note:"Modern stories are different. The author usually <b>does not tell</b> you the lesson. Instead, the author <b>shows</b> it through what characters say and do. As you read, ask: <b>Does this remind me of the Fox?</b>"},
+    {type:"mc", id:"L1-sour-line", label:"Question",
+      q:"Which line from “Sour” is most like the Fox saying, “Those grapes are probably sour”?",
+      opts:[
+        {t:"“Travel basketball is a waste of time.”", ok:true, fb:"Exactly. Like the Fox, Marcus insults the thing he couldn’t get, so that it hurts less."},
+        {t:"“So? Did you make it?”", fb:"That’s Dani asking a question. Look for where Marcus puts down the thing he didn’t get."},
+        {t:"His name wasn’t there.", fb:"That’s what happened (the plot). Which line shows Marcus <i>pretending</i> he didn’t want it?"},
+        {t:"Dani raised an eyebrow.", fb:"That shows Dani doesn’t believe Marcus. But which line is Marcus’s own “sour grapes”?"}
+      ]},
+    {type:"mc", id:"L1-sour-ending", label:"Question",
+      quote:"Her son was shooting free throws under the porch light, one after another, long after it got dark.",
+      q:"What does this ending SHOW the reader?",
+      opts:[
+        {t:"Marcus still cares about basketball, even though he said he didn’t.", ok:true, fb:"Yes! His <b>words</b> say one thing. His <b>actions</b> say another. Authors often put the truth in the ending."},
+        {t:"Marcus’s mom wants him to stop playing.", fb:"There is no clue that his mom wants him to stop. Focus on what Marcus is <i>doing</i>."},
+        {t:"Marcus is bored because he has no homework.", fb:"The story never mentions homework. Why would someone practice alone in the dark right after not making a team?"},
+        {t:"Marcus has another tryout tomorrow.", fb:"The story never says that. Think about what his practice shows about his feelings."}
+      ]},
+    {type:"concept", label:"Tell vs. show", html:`
+      <div class="concept">
+      <div class="steplabel">What you just discovered</div>
+      <h2>Fables TELL. Stories SHOW.</h2>
+      <div class="twocol">
+        <div class="panel"><span class="badge classic">Classic</span><h3>The Fox and the Grapes</h3><p>The author <b>tells</b> you the theme in the moral: <i>It is easy to pretend you don’t want what you can’t have.</i></p></div>
+        <div class="panel"><span class="badge">Modern</span><h3>Sour</h3><p>The author <b>shows</b> the same idea through what Marcus <b>says</b> (“a waste of time”) and what he <b>does</b> (practices in the dark).</p></div>
+      </div>
+      <div class="def">Same theme, 2,500 years apart. <b>People haven’t changed much.</b> That is why themes matter: they are true about real life.</div>
+      <p>Next: a theme is not just a word. Let’s learn the difference between a <b>topic</b> and a <b>theme</b>.</p>
+      </div>`},
+    {type:"sort", id:"L1-topic-theme", label:"Sort",
+      q:"Sort each card. Is it a TOPIC or a THEME?",
+      tip:"Tap a card, then tap the box where it belongs. (On a computer, you can also drag.)",
+      bins:[{id:"topic",label:"TOPIC",hint:"a word or short phrase · what the story is about"},{id:"theme",label:"THEME",hint:"a full sentence · what the story says about life"}],
+      cards:[
+        {t:"Disappointment",bin:"topic"},
+        {t:"Friendship",bin:"topic"},
+        {t:"Courage",bin:"topic"},
+        {t:"Honesty",bin:"topic"},
+        {t:"Family",bin:"topic"},
+        {t:"Pretending not to care doesn’t make the hurt go away.",bin:"theme"},
+        {t:"Real friends tell you the truth, even when it’s hard to hear.",bin:"theme"},
+        {t:"Being brave sometimes means admitting you’re scared.",bin:"theme"},
+        {t:"One small lie can grow into a much bigger problem.",bin:"theme"},
+        {t:"Families can disagree loudly and still love each other.",bin:"theme"}
+      ],
+      success:"Notice the pattern: a <b>topic</b> is one idea. A <b>theme</b> is a full sentence that says something <i>about</i> that idea."},
+    {type:"mc", id:"L1-sour-theme", label:"Final question",
+      q:"Which is the BEST theme statement for “Sour”?",
+      opts:[
+        {t:"People sometimes pretend they don’t want something because they’re afraid of being disappointed.", ok:true, fb:"That’s a strong theme: a full sentence, about people in general, and supported by the story."},
+        {t:"Basketball", fb:"That’s a <b>topic</b>, just one word. A theme is a full sentence about life."},
+        {t:"Marcus doesn’t make the travel team, and he practices at night.", fb:"That’s a <b>summary</b>. It tells what happened, but not what it means."},
+        {t:"You should never quit basketball.", fb:"That’s a <b>bossy command</b>. Themes don’t give orders. Also, Marcus never quits!"}
+      ]}
+  ]},
+
+2:{ name:"The Shallows", short:"Clue Tracker", depth:"50", unit:"m",
+  desc:"Find the 4 clues authors use to hide a theme",
+  stories:["levelten"],
+  steps:[
+    {type:"concept", label:"The 4 clues", html:`
+      <div class="concept">
+      <div class="steplabel">Your detective tools</div>
+      <h2>Authors hide theme in 4 places</h2>
+      <p>When a story doesn’t tell you the theme, follow these four clues:</p>
+      <div class="chain">
+        <div class="link" style="background:var(--want)"><b>🎯 Want</b>What does the character want most?</div>
+        <div class="link" style="background:var(--conflict)"><b>⚡ Conflict</b>What gets in the way? What is the problem?</div>
+        <div class="link" style="background:var(--change)"><b>🔄 Change</b>What does the character do differently?</div>
+        <div class="link" style="background:var(--final)"><b>💡 Realization</b>What does the character understand at the end?</div>
+      </div>
+      <div class="def"><b>Tip:</b> The theme is usually hiding in the <b>change</b> and the <b>ending</b>. Ask: <i>What did the character learn that people in real life could learn, too?</i></div>
+      </div>`},
+    {type:"read", story:"levelten", label:"Read",
+      note:"Read the whole story first. Then you will go back and find the four clues. Use <b>🔊 Listen</b> if you want to hear it read aloud."},
+    {type:"tap", id:"L2-clues", label:"Find the clues", story:"levelten",
+      prompts:[
+        {label:"Want", icon:"🎯", color:"var(--want)", accept:["want"],
+          q:"Tap the sentence that shows what Ana WANTS most.",
+          hint:"Look in the paragraph right after Theo asks, “Do you play?” Look for the word “wanted.”",
+          exp:"Ana wants to belong. She wants a seat at the table that is really hers."},
+        {label:"Conflict", icon:"⚡", color:"var(--conflict)", accept:["conflict"],
+          q:"Tap a sentence that shows the CONFLICT: the problem that puts pressure on Ana.",
+          hint:"Look for the moment when Ana’s lie gets hard to keep, or when the lie starts to feel heavy.",
+          exp:"Ana’s lie is tiring to keep up, and Priya’s invitation means it’s about to be discovered."},
+        {label:"Change", icon:"🔄", color:"var(--change)", accept:["change"],
+          q:"Tap the sentence where Ana CHANGES: she does something different from before.",
+          hint:"Before, Ana pretended. When does she stop pretending? Look at Monday.",
+          exp:"Ana stops pretending and tells the truth, even though it’s scary."},
+        {label:"Realization", icon:"💡", color:"var(--final)", accept:["final"],
+          q:"Tap a sentence near the end that shows what Ana REALIZES.",
+          hint:"Look at the last paragraph. What does Ana understand as she walks out of the cafeteria?",
+          exp:"Ana realizes she didn’t need the game to belong. Being honest felt easier than pretending."}
+      ],
+      after:"All four clues found! Look at your clue board. Together, these clues point to the theme."},
+    {type:"mc", id:"L2-theme", label:"Question",
+      q:"Use your clue board. Which is the BEST theme statement for “Level Ten”?",
+      opts:[
+        {t:"Pretending to be someone you’re not is exhausting, and real belonging starts with honesty.", ok:true, fb:"Yes! Look how it connects to every clue: Ana <b>wants</b> to belong, the lie is <b>exhausting</b>, she <b>changes</b> by telling the truth, and she <b>realizes</b> honesty is easier."},
+        {t:"Video games", fb:"That’s a <b>topic</b>, and not even the real one. Ana realized the game was never the point!"},
+        {t:"Ana lies about a video game, but then she tells the truth.", fb:"That’s a <b>summary</b>. It retells the plot. What does the story say about <i>people</i>?"},
+        {t:"You should always tell your friends the truth.", fb:"That’s a <b>bossy command</b>. A theme shares an insight about life. It doesn’t give orders."}
+      ]},
+    {type:"write", id:"L2-write", label:"Write",
+      intro:"Now explain the theme in your own words. Use the sentence starters.",
+      frames:["In “Level Ten,” the author shows that…","Pretending to be someone else can…","I know this because Ana…","For example, when Ana…, this shows…"],
+      fields:[
+        {label:"The theme", frame:"Start with: In “Level Ten,” the author shows that…", min:8, check:true},
+        {label:"Your evidence", frame:"Start with: I know this because…  (use one clue from your clue board)", min:8}
+      ],
+      names:["ana","theo","priya","skyforge"]}
+  ]},
+
+3:{ name:"The Reef", short:"Statement Lab", depth:"200", unit:"m",
+  desc:"Build strong theme statements and dodge the 4 traps",
+  stories:["tomato"],
+  steps:[
+    {type:"concept", label:"The recipe", html:`
+      <div class="concept">
+      <div class="steplabel">The theme statement recipe</div>
+      <h2>A strong theme statement…</h2>
+      <ul class="recipe">
+        <li>is a <b>full sentence</b>, not one word</li>
+        <li>is about <b>people in general</b>, not only one character</li>
+        <li>says what the story <b>means</b>, not just what happens</li>
+        <li><b>shares an insight</b>; it doesn’t give orders</li>
+      </ul>
+      <h3>The 4 traps</h3>
+      <p class="small">Tap each card to flip it. The examples come from “Level Ten.”</p>
+      <div class="flips">
+        <button class="flip"><div class="fi"><div class="fa"><b>Just a topic</b><span>tap to flip</span></div><div class="fb2">“Friendship.”<i>Only one word. What about friendship?</i></div></div></button>
+        <button class="flip"><div class="fi"><div class="fa"><b>Just a summary</b><span>tap to flip</span></div><div class="fb2">“Ana lies about a game and then tells the truth.”<i>That’s the plot, not the meaning.</i></div></div></button>
+        <button class="flip"><div class="fi"><div class="fa"><b>Bossy command</b><span>tap to flip</span></div><div class="fb2">“You should never lie.”<i>Themes share ideas; they don’t give orders. Watch for: should, never, always, don’t.</i></div></div></button>
+        <button class="flip"><div class="fi"><div class="fa"><b>Stuck in the story</b><span>tap to flip</span></div><div class="fb2">“Ana learns to be honest with Theo and Priya.”<i>Only about these characters. Is it true for everyone?</i></div></div></button>
+        <button class="flip"><div class="fi"><div class="fa strong"><b>Strong ✓</b><span>tap to flip</span></div><div class="fb2">“Pretending to be someone you’re not is exhausting.”<i>Full sentence, about people, a real insight.</i></div></div></button>
+      </div>
+      </div>`},
+    {type:"read", story:"tomato", label:"Read",
+      note:"As you read, track how Jayden’s <b>feelings</b> about the job change from the beginning to the end."},
+    {type:"judge", id:"L3-judge", label:"Strong or trap?",
+      q:"Each statement is about “The Tomato Job.” Is it STRONG, or which TRAP is it?",
+      items:[
+        {t:"Responsibility", a:"topic", exp:"One word. It names the topic but says nothing about it."},
+        {t:"Jayden waters Mrs. Okafor’s garden for a month and ends up liking it.", a:"summary", exp:"This retells the plot. It doesn’t say what the story means."},
+        {t:"You should always help your neighbors.", a:"bossy", exp:"“You should” gives an order. Themes share an insight instead."},
+        {t:"Taking care of something, even when we didn’t choose to, can make us care about it.", a:"strong", exp:"Full sentence, about people in general, and the whole story supports it."},
+        {t:"Jayden learns that he likes Mrs. Okafor’s tomato plants.", a:"stuck", exp:"This is a lesson, but only about Jayden. Make it true for anyone."},
+        {t:"Hard work", a:"topic", exp:"A short phrase. What does the story say ABOUT hard work?"},
+        {t:"Never judge a job before you try it.", a:"bossy", exp:"“Never” makes it a command. How could you say it as an insight about people?"},
+        {t:"Small acts of care can grow into a real commitment.", a:"strong", exp:"Just like the tomato plant, Jayden’s care grew. This is about people, not just Jayden."},
+        {t:"The story is about a boy, a garden, and a neighbor with a broken wrist.", a:"summary", exp:"This lists what’s in the story. It doesn’t explain the meaning."},
+        {t:"Jayden finds out that watering plants is more fun than he thought.", a:"stuck", exp:"Only about Jayden and plants. Zoom out: what would this mean for anyone?"}
+      ]},
+    {type:"build", id:"L3-build", label:"Build a theme",
+      q:"Build a theme statement for “The Tomato Job.” Pick one part from each column.",
+      start:"When people", mid:", they", end:".",
+      a:[
+        {t:"are given a responsibility they didn’t ask for", ok:true},
+        {t:"take care of something day after day", ok:true},
+        {t:"have a neighbor next door", fb:"Too small. Having a neighbor isn’t what changed Jayden. What did he <i>do</i> every day?"}
+      ],
+      b:[
+        {t:"can end up caring more than they ever expected", ok:true},
+        {t:"slowly start to feel that it belongs to them", ok:true},
+        {t:"always get a reward at the end", fb:"Careful with “always.” Jayden didn’t get a reward, and the story isn’t about prizes."}
+      ],
+      success:"That’s a strong theme statement! Notice: no names, no “should,” and it’s true in real life, not just for Jayden."},
+    {type:"write", id:"L3-write", label:"Write your own",
+      intro:"Now write your OWN theme statement for “The Tomato Job.” The checker below your answer will help you dodge the traps.",
+      frames:["When people…, they…","The story suggests that…","Taking care of something can…","In the story, Jayden…, which shows…"],
+      fields:[
+        {label:"Your theme statement", frame:"Write a full sentence about people in general. Try not to copy the one you just built!", min:8, check:true},
+        {label:"Your evidence", frame:"Start with: In the story, … (describe or copy a moment that supports your theme)", min:8}
+      ],
+      names:["jayden","okafor","mrs."]}
+  ]},
+
+4:{ name:"The Drop-Off", short:"Same Topic, Different Theme", depth:"1,000", unit:"m",
+  desc:"Two stories, one topic, two very different messages",
+  stories:["bench","eleventh"],
+  steps:[
+    {type:"concept", label:"One topic, two themes", html:`
+      <div class="concept">
+      <div class="steplabel">Going deeper</div>
+      <h2>Same topic ≠ same theme</h2>
+      <svg viewBox="0 0 600 190" role="img" aria-label="One topic splits into two different themes">
+        <rect x="190" y="12" width="220" height="56" rx="14" fill="#0b3954"/>
+        <text x="300" y="38" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="18" font-weight="800" fill="#fff">TOPIC</text>
+        <text x="300" y="58" text-anchor="middle" font-family="Atkinson Hyperlegible,sans-serif" font-size="14" fill="#ffc857">teams · falling short</text>
+        <path d="M260 70 C 220 110, 150 110, 140 130" stroke="#087e8b" stroke-width="4" fill="none"/>
+        <path d="M340 70 C 380 110, 450 110, 460 130" stroke="#f25f4c" stroke-width="4" fill="none"/>
+        <rect x="40" y="130" width="200" height="50" rx="12" fill="#e6f4f6" stroke="#087e8b" stroke-width="2"/>
+        <text x="140" y="161" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="17" font-weight="800" fill="#087e8b">Theme A = ?</text>
+        <rect x="360" y="130" width="200" height="50" rx="12" fill="#fde9e6" stroke="#f25f4c" stroke-width="2"/>
+        <text x="460" y="161" text-anchor="middle" font-family="Fraunces,Georgia,serif" font-size="17" font-weight="800" fill="#c8473a">Theme B = ?</text>
+      </svg>
+      <p>Two authors can write about the <b>same topic</b> and say <b>completely different things</b> about it.</p>
+      <p>You will read two stories about school teams where things don’t go the way a character hoped. Your job: figure out what <b>each</b> author is saying.</p>
+      </div>`},
+    {type:"read", story:"bench", label:"Read Story A",
+      note:"<b>Story A.</b> Watch how Sofia feels about the bench at the beginning, and how she sees herself at the end."},
+    {type:"read", story:"eleventh", label:"Read Story B",
+      note:"<b>Story B.</b> Watch how Malik treats his teammates, and what happens because of it."},
+    {type:"mc", id:"L4-topic", label:"Question",
+      q:"What TOPIC do both stories share?",
+      opts:[
+        {t:"Being on a team when things don’t go the way you hoped", ok:true, fb:"Right. Same topic. Now let’s see if they have the same theme…"},
+        {t:"Basketball", fb:"Only “The Bench” is about basketball."},
+        {t:"Robots and technology", fb:"Only “Eleventh Place” is about robots."},
+        {t:"Winning a championship", fb:"Neither story ends with a championship. Think bigger: what situation are both characters in?"}
+      ]},
+    {type:"sort", id:"L4-venn", label:"Compare",
+      q:"Where does each detail belong? Story A, Story B, or BOTH?",
+      tip:"Tap a card, then tap a box. Use 📖 Reread if you need to check.",
+      bins:[{id:"bench",label:"The Bench",hint:"Story A only"},{id:"both",label:"Both",hint:"true for both stories"},{id:"eleventh",label:"Eleventh Place",hint:"Story B only"}],
+      cards:[
+        {t:"A character feels invisible to the team",bin:"bench"},
+        {t:"A character discovers a skill she didn’t know she had",bin:"bench"},
+        {t:"Paying close attention turns out to be powerful",bin:"bench"},
+        {t:"A character refuses other people’s ideas",bin:"eleventh"},
+        {t:"Teammates slowly stop trying to help",bin:"eleventh"},
+        {t:"A drawing from months ago turns out to be the answer",bin:"eleventh"},
+        {t:"Things don’t go the way the main character hoped",bin:"both"},
+        {t:"The story happens on a school team",bin:"both"},
+        {t:"The ending shows a character starting to think differently",bin:"both"}
+      ],
+      success:"The stories start in a similar place, but the characters learn <b>different</b> things. That difference is where the themes split."},
+    {type:"sort", id:"L4-themes", label:"Match themes",
+      q:"Match each theme statement to the story it fits best.",
+      tip:"Two themes belong to each story.",
+      bins:[{id:"bench",label:"The Bench",hint:"Sofia’s story"},{id:"eleventh",label:"Eleventh Place",hint:"Malik’s story"}],
+      cards:[
+        {t:"Not getting what you want can reveal a strength you didn’t know you had.",bin:"bench"},
+        {t:"Being valuable to a team doesn’t always mean being the star.",bin:"bench"},
+        {t:"Trying to do everything alone can make a whole team fail.",bin:"eleventh"},
+        {t:"Good leaders make room for other people’s ideas.",bin:"eleventh"}
+      ],
+      success:"Same topic, two different messages. Sofia learns about her <b>own hidden value</b>. Malik learns about the <b>value of others</b>."},
+    {type:"write", id:"L4-write", label:"Write",
+      intro:"Explain how the two stories share a topic but have different themes.",
+      frames:["Both stories are about…","“The Bench” suggests that…","However, “Eleventh Place” suggests that…","For example, when Sofia/Malik…"],
+      fields:[
+        {label:"The shared topic", frame:"Start with: Both stories are about…", min:5},
+        {label:"Theme of “The Bench”", frame:"Start with: “The Bench” suggests that…", min:7, check:true},
+        {label:"Theme of “Eleventh Place”", frame:"Start with: However, “Eleventh Place” suggests that…", min:7, check:true}
+      ],
+      names:["sofia","malik","grace","daniel","reyes"]}
+  ]},
+
+5:{ name:"The Deep", short:"Final Case", depth:"4,000", unit:"m",
+  desc:"Symbols, more than one theme, and your own analysis",
+  stories:["battery"],
+  steps:[
+    {type:"concept", label:"Deeper tools", html:`
+      <div class="concept">
+      <div class="steplabel">The deepest level</div>
+      <h2>Deep stories do two extra things</h2>
+      <div class="twocol">
+        <div class="panel"><h3>1. Symbols</h3><p>A <b>symbol</b> is an object that stands for a bigger idea.</p><p class="small">Real-life examples: a dove can stand for peace. A wedding ring can stand for a promise.</p></div>
+        <div class="panel"><h3>2. More than one theme</h3><p>Rich stories can carry <b>two or three</b> messages at once. A strong reader can find more than one.</p></div>
+      </div>
+      <div class="def"><b>Your mission:</b> In this story, watch for <b>two objects</b> that seem to matter more than they should.</div>
+      </div>`},
+    {type:"read", story:"battery", label:"Read",
+      note:"This is the longest story. Take your time. Use <b>🔊 Listen</b> if it helps, and tap dotted words for meanings."},
+    {type:"mc", id:"L5-phone", label:"Symbol 1",
+      quote:"Nina stared at the dark glass. She saw her own reflection in it: mouth open, eyes wide, completely ridiculous.",
+      q:"A SYMBOL is an object that stands for a bigger idea. What could Nina’s phone stand for?",
+      opts:[
+        {t:"Something that stands between Nina and the real moment", ok:true, fb:"Yes. All afternoon, Nina sees the party <i>through</i> a screen. When it goes dark, she sees only herself, and then she finally sees the real thing."},
+        {t:"Nina’s dream of becoming famous", fb:"Close: she does want subscribers. But think about what the phone keeps her from <i>doing</i> all afternoon."},
+        {t:"The idea that all technology is bad", fb:"That’s too extreme. The story doesn’t say technology is bad. It shows what Nina was missing by staring at a screen."},
+        {t:"Her cousin Ray", fb:"Ray is a character, not a symbol."}
+      ]},
+    {type:"mc", id:"L5-harmonica", label:"Symbol 2",
+      quote:"Grandpa Lou pressed the harmonica into her hand.",
+      q:"What could the dented silver harmonica stand for?",
+      opts:[
+        {t:"A connection between generations: something passed from grandfather to granddaughter", ok:true, fb:"Yes! He played it the night he met her grandmother, and now he gives it to Nina. The harmonica carries the family’s story forward."},
+        {t:"Nina’s natural talent for music", fb:"Nina says she doesn’t know how to play. Think about who gives it to whom, and why."},
+        {t:"Something broken that should be thrown away", fb:"It’s dented, but Grandpa still plays it beautifully. Being imperfect doesn’t make it worthless. That’s part of its meaning!"},
+        {t:"Grandpa Lou’s wish to be famous", fb:"There’s no evidence that Grandpa wants to be famous. That’s Nina’s goal, not his."}
+      ]},
+    {type:"tap", id:"L5-change", label:"Track the change", story:"battery",
+      prompts:[
+        {label:"Turning point", icon:"🔄", color:"var(--change)", accept:["turn"],
+          q:"Tap a sentence where Nina’s focus begins to change.",
+          hint:"Look at what happens right after the phone dies, while Grandpa plays.",
+          exp:"When the screen goes dark, Nina stops watching through the phone and starts actually paying attention."},
+        {label:"Proof it lasted", icon:"💡", color:"var(--final)", accept:["last"],
+          q:"Tap a sentence in the LAST paragraphs that proves the change lasted.",
+          hint:"Look at the very end. What does Nina do that week? Where is the phone?",
+          exp:"Nina chooses learning the harmonica over posting a video. The change is real."}
+      ],
+      after:"Great tracking. A character’s change is one of the strongest clues to theme."},
+    {type:"multi", id:"L5-themes", label:"More than one theme", n:3,
+      q:"This story has MORE than one theme. Select the THREE strong theme statements.",
+      opts:[
+        {t:"Trying too hard to capture a moment can make us miss living it.", ok:true},
+        {t:"Family stories and traditions live on when someone truly pays attention.", ok:true},
+        {t:"Something doesn’t have to be perfect to be meaningful.", ok:true},
+        {t:"You should always put your phone away at parties.", fb:"Bossy command: “you should always.”"},
+        {t:"Nina’s phone dies at her grandfather’s birthday party.", fb:"Summary: this is what happens, not what it means."},
+        {t:"Nina learns to play the harmonica her grandpa gave her.", fb:"Stuck in the story: only about Nina."}
+      ],
+      success:"Three themes in one story! The <b>phone</b> connects to the first, the <b>harmonica</b> to the second, and Grandpa’s words (“I was terrible. She danced anyway.”) to the third."},
+    {type:"write", id:"L5-write", label:"Final analysis",
+      intro:"Final case. Write your own analysis of “The Battery.” Choose ONE theme (one of the three, or your own), and prove it with two pieces of evidence.",
+      frames:["In “The Battery,” the author suggests that…","One piece of evidence is when…","Another piece of evidence is…","This shows the theme because…","The phone / harmonica represents…"],
+      fields:[
+        {label:"Theme statement", frame:"Start with: In “The Battery,” the author suggests that…", min:8, check:true},
+        {label:"Evidence #1", frame:"Start with: One piece of evidence is when…", min:8},
+        {label:"Evidence #2", frame:"Start with: Another piece of evidence is…  (Try using a symbol!)", min:8},
+        {label:"Explain your thinking", frame:"Start with: This shows the theme because…", min:10}
+      ],
+      names:["nina","lou","ray","grandpa"]}
+  ]}
+};
+
+/* =========================================================
+   STATE + STORAGE + LOGGING
+   ========================================================= */
+let S = {student:"", period:"", prog:{}, teacher:false};
+let L = null; // current level run
+
+const $ = (sel, root=document) => root.querySelector(sel);
+const $$ = (sel, root=document) => Array.from(root.querySelectorAll(sel));
+const app = $("#app");
+
+function storeKey(){ return "btsThemeLab:" + S.student.trim().toLowerCase() + ":" + S.period; }
+function save(){ try{ localStorage.setItem(storeKey(), JSON.stringify(S.prog)); }catch(e){} }
+function load(){ try{ const v = localStorage.getItem(storeKey()); S.prog = v ? JSON.parse(v) : {}; }catch(e){ S.prog = {}; } }
+function wc(t){ return (t||"").trim().split(/\s+/).filter(Boolean).length; }
+function station(){ return L ? `L${L.n} ${LEVELS[L.n].short}` : "Map"; }
+
+function log(event, stageIndex, correct, stars, text, words){
+  if(!S.student) return;
+  const body = {
+    app: APP, student: S.student, period: S.period, event: event,
+    station: station(), stageIndex: stageIndex == null ? "" : String(stageIndex),
+    correct: correct === undefined || correct === null ? "" : correct,
+    stars: stars == null ? "" : stars,
+    text: text || "", wordCount: words != null ? words : (text ? wc(text) : "")
+  };
+  try{
+    fetch(LOG_URL,{method:"POST",mode:"no-cors",headers:{"Content-Type":"text/plain;charset=utf-8"},body:JSON.stringify(body)}).catch(()=>{});
+  }catch(e){}
+}
+function rec(ok){ if(!L) return; L.checks++; if(ok) L.right++; }
+
+function toast(msg){ const t=$("#toast"); t.textContent=msg; t.classList.add("show"); clearTimeout(toast._t); toast._t=setTimeout(()=>t.classList.remove("show"),2400); }
+function shuffle(a){ a=a.slice(); for(let i=a.length-1;i>0;i--){const j=Math.floor(Math.random()*(i+1));[a[i],a[j]]=[a[j],a[i]];} return a; }
+function esc(s){ return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;"); }
+function starStr(n){ let s=""; for(let i=1;i<=3;i++) s += i<=n ? "★" : '<span class="off">★</span>'; return s; }
+
+/* =========================================================
+   STORY RENDERING, GLOSSARY, LISTEN
+   ========================================================= */
+function gloss(t){
+  return esc(t).replace(/\[\[(.+?)\|(.+?)\]\]/g,(m,w,d)=>`<button class="gl" data-w="${w}" data-def="${d}">${w}</button>`);
+}
+function plain(t){ return t.replace(/\[\[(.+?)\|(.+?)\]\]/g,"$1"); }
+function storyText(key){
+  const s = STORIES[key];
+  let out = s.title + ". ";
+  s.paras.forEach(p=>p.forEach(x=>{ out += plain(typeof x==="string"?x:x.t) + " "; }));
+  if(s.moral) out += s.moral;
+  return out;
+}
+function storyHTML(key, withListen=true){
+  const s = STORIES[key];
+  let h = `<div class="shead"><div><span class="badge ${s.classic?"classic":""}">${s.badge}</span><h3 class="stitle">${esc(s.title)}</h3><div class="sby">${esc(s.by)}</div></div>`;
+  if(withListen) h += `<button class="listen" data-story="${key}">🔊 Listen</button>`;
+  h += `</div>`;
+  s.paras.forEach(p=>{
+    h += "<p>" + p.map(x=>{
+      const t = typeof x==="string" ? x : x.t;
+      const k = typeof x==="string" ? "" : x.k;
+      return `<span class="snt" data-k="${k}">${gloss(t)}</span>`;
+    }).join(" ") + "</p>";
+  });
+  if(s.moral) h += `<p class="moral">${esc(s.moral)}</p>`;
+  return h;
+}
+
+let speaking = null;
+function stopSpeak(){ try{ if(window.speechSynthesis) speechSynthesis.cancel(); }catch(e){} $$(".listen").forEach(b=>b.textContent="🔊 Listen"); speaking=null; }
+document.addEventListener("click", e=>{
+  const g = e.target.closest(".gl");
+  const pop = $("#pop");
+  if(g){
+    e.stopPropagation();
+    pop.innerHTML = `<b>${g.dataset.w}</b>: ${g.dataset.def}`;
+    pop.style.display = "block";
+    const r = g.getBoundingClientRect();
+    const left = Math.min(window.scrollX + r.left, window.scrollX + document.documentElement.clientWidth - 296);
+    pop.style.left = Math.max(8, left) + "px";
+    pop.style.top = (window.scrollY + r.bottom + 6) + "px";
+    log("glossary", g.dataset.w);
+    return;
+  }
+  pop.style.display = "none";
+  const lb = e.target.closest(".listen");
+  if(lb){
+    if(!window.speechSynthesis){ toast("Read-aloud isn’t available on this device."); return; }
+    if(speaking === lb.dataset.story){ stopSpeak(); return; }
+    stopSpeak();
+    const u = new SpeechSynthesisUtterance(storyText(lb.dataset.story));
+    u.rate = 0.9; u.lang = "en-US";
+    u.onend = ()=>{ lb.textContent="🔊 Listen"; speaking=null; };
+    speechSynthesis.speak(u);
+    speaking = lb.dataset.story; lb.textContent = "⏹ Stop";
+    log("listen", lb.dataset.story);
+  }
+  const fl = e.target.closest(".flip");
+  if(fl) fl.classList.toggle("on");
+}, true);
+
+/* =========================================================
+   SCREENS
+   ========================================================= */
+function setWho(){ $("#who").textContent = S.student ? `${S.student} · Period ${S.period}` : ""; }
+
+function renderStart(){
+  L = null; stopSpeak(); removeFooter();
+  let opts = '<option value="">Choose…</option>';
+  for(let i=1;i<=9;i++) opts += `<option>${i}</option>`;
+  app.innerHTML = `
+  <section class="hero">
+    ${BERG_SVG}
+    <div class="inner">
+      <h1>Below the Surface</h1>
+      <p>Every story has a message hiding under the plot. Dive five levels deep to find it.</p>
+    </div>
+  </section>
+  <form class="form" id="startForm" autocomplete="off">
+    <label for="nm">First and last name</label>
+    <input id="nm" maxlength="40" required placeholder="Type your name">
+    <label for="pd">Class period</label>
+    <select id="pd" required>${opts}</select>
+    <div style="margin-top:16px;display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+      <button class="btn" type="submit">Start diving →</button>
+      <span class="small">Your answers are saved for Mr. V.</span>
+    </div>
+  </form>
+  <p style="text-align:right"><button class="linkbtn" id="teach">Teacher</button></p>`;
+  $("#startForm").addEventListener("submit", e=>{
+    e.preventDefault();
+    const n = $("#nm").value.trim().replace(/\s+/g," ");
+    const p = $("#pd").value;
+    if(n.split(" ").length < 2){ toast("Please type your first AND last name."); return; }
+    if(!p){ toast("Please choose your class period."); return; }
+    S.student = n; S.period = p; load(); setWho();
+    log("session_start","");
+    renderMap();
+  });
+  $("#teach").addEventListener("click", ()=>{
+    const c = prompt("Teacher code:");
+    if(c && c.trim().toLowerCase() === TEACHER_CODE){ S.teacher = true; toast("All levels unlocked for this session."); }
+    else if(c) toast("That code didn’t work.");
+  });
+}
+
+function unlocked(n){ return n===1 || S.teacher || !!S.prog[n-1]; }
+
+function renderMap(){
+  L = null; stopSpeak(); removeFooter();
+  if(!S.student){ renderStart(); return; }
+  const done = Object.keys(S.prog).length;
+  let h = `<div class="maphead"><h2>Welcome, ${esc(S.student.split(" ")[0])}.</h2><p class="small">${done} of 5 levels complete. Levels unlock in order.</p></div><div class="dive">${MAP_SVG}<div class="stations">`;
+  for(let n=1;n<=5;n++){
+    const lv = LEVELS[n]; const open = unlocked(n); const p = S.prog[n];
+    h += `<button class="station" data-n="${n}" ${open?"":"disabled"}>
+      <div class="depth"><b>${n}</b>${lv.depth} ${lv.unit}</div>
+      <div><h3>${lv.name}: ${lv.short}</h3><p>${lv.desc}</p></div>
+      <div>${p ? `<span class="stars">${starStr(p.stars)}</span>` : open ? `<span class="lock">▶️</span>` : `<span class="lock">🔒</span>`}</div>
+    </button>`;
+  }
+  h += `</div></div>`;
+  if(done===5) h += `<div class="stepcard" style="margin-top:16px;text-align:center"><h3>🏅 You reached the bottom!</h3><p>You can replay any level to earn more stars.</p></div>`;
+  app.innerHTML = h;
+  $$(".station").forEach(b=>b.addEventListener("click",()=>startLevel(+b.dataset.n)));
+  window.scrollTo(0,0);
+}
+
+function startLevel(n){
+  if(!unlocked(n)) return;
+  L = {n, i:0, checks:0, right:0};
+  log("level_start", LEVELS[n].name);
+  renderStep();
+}
+
+/* footer */
+function removeFooter(){ const f=$(".footer"); if(f) f.remove(); }
+function setFooter(canNext){
+  removeFooter();
+  const lv = LEVELS[L.n];
+  const last = L.i === lv.steps.length-1;
+  const f = document.createElement("div");
+  f.className = "footer";
+  f.innerHTML = `<div class="in">
+    <button class="btn ghost" id="mapBtn">← Map</button>
+    <div style="display:flex;gap:8px">
+      ${lv.stories && L.i>0 ? `<button class="btn ghost" id="rereadBtn">📖 Reread</button>` : ""}
+      <button class="btn" id="nextBtn" ${canNext?"":"disabled"}>${last?"Finish level ✓":"Next →"}</button>
+    </div></div>`;
+  document.body.appendChild(f);
+  $("#mapBtn").addEventListener("click", ()=>{ if(confirm("Leave this level? Your progress in this level will restart.")) renderMap(); });
+  const rr = $("#rereadBtn"); if(rr) rr.addEventListener("click", openReread);
+  $("#nextBtn").addEventListener("click", next);
+}
+function enableNext(){ const b=$("#nextBtn"); if(b){ b.disabled=false; } }
+
+function renderStep(){
+  stopSpeak();
+  const lv = LEVELS[L.n];
+  const st = lv.steps[L.i];
+  let dots = lv.steps.map((s,i)=>`<i class="${i<L.i?"done":i===L.i?"now":""}" title="${esc(s.label||"")}"></i>`).join("");
+  app.innerHTML = `
+    <div class="lvhead"><span class="lvtag">Level ${L.n} · ${lv.name}</span><div class="dots">${dots}</div></div>
+    <h2 style="margin:4px 0 12px">${lv.short}</h2>
+    <div class="stepcard" id="stepBody"></div>`;
+  const body = $("#stepBody");
+  const auto = (st.type==="read" || st.type==="concept");
+  setFooter(auto);
+  STEP[st.type](st, body, enableNext);
+  window.scrollTo(0,0);
+}
+
+function next(){
+  const lv = LEVELS[L.n];
+  if(L.i >= lv.steps.length-1){ finishLevel(); return; }
+  L.i++; renderStep();
+}
+
+function finishLevel(){
+  stopSpeak();
+  const n = L.n;
+  const pct = L.checks ? L.right / L.checks : 1;
+  const stars = pct >= 0.9 ? 3 : pct >= 0.7 ? 2 : 1;
+  const prev = (S.prog[n] && S.prog[n].stars) || 0;
+  S.prog[n] = {stars: Math.max(prev, stars)};
+  save();
+  log("level_complete", "score", "", stars, `${L.right}/${L.checks} correct on first try`);
+  const allDone = Object.keys(S.prog).length === 5;
+  let html = `<div class="big">${starStr(stars)}</div>
+    <h2>Level ${n} complete!</h2>
+    <p>You got <b>${L.right} of ${L.checks}</b> right on the first try.</p>`;
+  if(n===5){
+    log("app_complete","", "", stars, "");
+    html += `<div class="cert"><div class="small">CERTIFIED DEEP READER</div><h3 style="margin:6px 0">${esc(S.student)}</h3><p class="small">reached 4,000 meters below the surface and can find, explain, and prove a story’s theme.</p></div>`;
+  } else {
+    html += `<p class="small">Level ${n+1}, <b>${LEVELS[n+1].name}</b>, is now unlocked.</p>`;
+  }
+  html += `<div style="display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin-top:12px">
+    <button class="btn ghost" id="mAgain">Replay</button>
+    <button class="btn sea" id="mMap">Back to map</button>
+    ${n<5?`<button class="btn" id="mNext">Dive to Level ${n+1} →</button>`:""}
+  </div>`;
+  $("#modalBody").innerHTML = html;
+  $("#modal").classList.add("open");
+  const close = ()=>$("#modal").classList.remove("open");
+  $("#mMap").onclick = ()=>{ close(); renderMap(); };
+  $("#mAgain").onclick = ()=>{ close(); startLevel(n); };
+  if($("#mNext")) $("#mNext").onclick = ()=>{ close(); startLevel(n+1); };
+}
+
+/* =========================================================
+   DRAWERS
+   ========================================================= */
+function openDrawer(html){
+  $("#drawerBody").innerHTML = `<button class="btn ghost x" id="dx">Close ✕</button>` + html;
+  $("#drawer").classList.add("open"); $("#drawer").setAttribute("aria-hidden","false");
+  $("#dx").onclick = closeDrawer;
+}
+function closeDrawer(){ stopSpeak(); $("#drawer").classList.remove("open"); $("#drawer").setAttribute("aria-hidden","true"); }
+$("#drawer .bg").addEventListener("click", closeDrawer);
+function openReread(){
+  if(!L) return;
+  const keys = LEVELS[L.n].stories;
+  openDrawer(`<h2>Reread</h2>` + keys.map(k=>`<div class="stepcard story" style="margin-bottom:14px">${storyHTML(k)}</div>`).join(""));
+  log("reread", keys.join(","));
+}
+$("#toolkitBtn").addEventListener("click", ()=>{
+  openDrawer(`
+  <h2>🧰 Theme Toolkit</h2>
+  <div class="stepcard" style="margin-bottom:14px">
+    <h3>Key words</h3>
+    <dl class="vocab">
+      <dt>Plot</dt><dd>What happens in a story.</dd>
+      <dt>Topic</dt><dd>What a story is about, in a word or phrase (friendship, courage).</dd>
+      <dt>Theme</dt><dd>The message about life that a story shows, in a full sentence.</dd>
+      <dt>Moral</dt><dd>A lesson stated directly, usually at the end of a fable.</dd>
+      <dt>Conflict</dt><dd>The problem a character faces.</dd>
+      <dt>Symbol</dt><dd>An object that stands for a bigger idea.</dd>
+      <dt>Evidence</dt><dd>Details or quotes from the text that prove your idea.</dd>
+    </dl>
+  </div>
+  <div class="stepcard" style="margin-bottom:14px">
+    <h3>The 4 clues</h3>
+    <p>🎯 <b>Want</b> → ⚡ <b>Conflict</b> → 🔄 <b>Change</b> → 💡 <b>Realization</b></p>
+  </div>
+  <div class="stepcard" style="margin-bottom:14px">
+    <h3>Sentence frames</h3>
+    <ul>
+      <li>The author suggests that…</li>
+      <li>When people …, they …</li>
+      <li>The story shows that sometimes…</li>
+      <li>One piece of evidence is when…</li>
+      <li>This shows the theme because…</li>
+      <li>At first, … but by the end, …</li>
+      <li>The ___ represents …</li>
+    </ul>
+  </div>
+  <div class="stepcard">
+    <h3>Avoid the 4 traps</h3>
+    <p>✗ Just a topic · ✗ Just a summary · ✗ Bossy command · ✗ Stuck in the story</p>
+  </div>`);
+});
+$("#brand").addEventListener("click", ()=>{
+  if(!S.student){ renderStart(); return; }
+  if(L && !confirm("Go back to the map? Your progress in this level will restart.")) return;
+  renderMap();
+});
+
+/* =========================================================
+   STEP TYPES
+   ========================================================= */
+const STEP = {};
+
+STEP.concept = (st, body, done)=>{ body.innerHTML = st.html; done(); };
+
+STEP.read = (st, body, done)=>{
+  body.innerHTML = (st.note ? `<div class="note">${st.note}</div>` : "") + `<div class="story">${storyHTML(st.story)}</div>`;
+  log("read", st.story);
+  done();
+};
+
+STEP.mc = (st, body, done)=>{
+  let first = true;
+  const opts = shuffle(st.opts.map((o,i)=>({...o,i})));
+  body.innerHTML = `<div class="steplabel">${esc(st.label||"Question")}</div>
+    ${st.quote?`<blockquote>${esc(st.quote)}</blockquote>`:""}
+    <div class="prompt">${esc(st.q)}</div>
+    <div class="opts">${opts.map((o,k)=>`<button class="opt" data-i="${o.i}"><span class="let">${"ABCDEF"[k]}</span><span>${esc(o.t)}</span></button>`).join("")}</div>
+    <div class="fb" id="fb"></div>`;
+  const fb = $("#fb", body);
+  $$(".opt", body).forEach(b=>b.addEventListener("click", ()=>{
+    const o = st.opts[+b.dataset.i];
+    const ok = !!o.ok;
+    if(first){ rec(ok); log("answer", st.id, ok, null, o.t); first=false; }
+    if(ok){
+      b.classList.add("right");
+      $$(".opt", body).forEach(x=>x.disabled=true);
+      fb.className = "fb show good"; fb.innerHTML = "✓ " + (o.fb||"Correct!");
+      done();
+    } else {
+      b.classList.add("wrong"); b.disabled = true;
+      fb.className = "fb show bad"; fb.innerHTML = "✗ " + (o.fb||"Not quite. Try again.");
+    }
+  }));
+};
+
+STEP.sort = (st, body, done)=>{
+  const items = shuffle(st.cards.map((c,i)=>({...c, id:i, place:null, locked:false, tried:false, state:""})));
+  let sel = null;
+  body.innerHTML = `<div class="steplabel">${esc(st.label||"Sort")}</div>
+    <div class="prompt">${esc(st.q)}</div>
+    <div class="small" style="margin-bottom:8px">${esc(st.tip||"")}</div>
+    <div class="armedtip" id="armed"></div>
+    <div class="pool" data-bin=""></div>
+    <div class="bins b${st.bins.length}">${st.bins.map(b=>`<div class="bin" data-bin="${b.id}"><div class="binhead"><b>${esc(b.label)}</b><span>${esc(b.hint||"")}</span></div><div class="binbody"></div></div>`).join("")}</div>
+    <div style="margin-top:14px"><button class="btn sea" id="chk">Check my sort</button></div>
+    <div class="fb" id="sfb"></div>`;
+  const pool = $(".pool", body);
+  function zoneOf(binId){ return binId ? $(`.bin[data-bin="${binId}"] .binbody`, body) : pool; }
+  function draw(){
+    pool.innerHTML = ""; $$(".binbody", body).forEach(z=>z.innerHTML="");
+    items.forEach(it=>{
+      const el = document.createElement("button");
+      el.type = "button";
+      el.className = "card" + (sel===it.id?" sel":"") + (it.state?" "+it.state:"");
+      el.textContent = it.t;
+      el.dataset.id = it.id;
+      el.draggable = !it.locked;
+      el.addEventListener("click", e=>{
+        e.stopPropagation();
+        if(it.locked) return;
+        sel = (sel===it.id) ? null : it.id;
+        draw();
+      });
+      el.addEventListener("dragstart", e=>{ if(it.locked){e.preventDefault();return;} e.dataTransfer.setData("text/plain", String(it.id)); });
+      zoneOf(it.place).appendChild(el);
+    });
+    $("#armed", body).textContent = sel===null ? "" : "Now tap the box where this card belongs.";
+    $$(".bin", body).forEach(b=>b.classList.toggle("armed", sel!==null));
+  }
+  function place(id, binId){
+    const it = items.find(x=>x.id===id); if(!it || it.locked) return;
+    it.place = binId || null; it.state = ""; sel = null; draw();
+  }
+  $$(".bin, .pool", body).forEach(z=>{
+    z.addEventListener("click", ()=>{ if(sel!==null) place(sel, z.dataset.bin); });
+    z.addEventListener("dragover", e=>{ e.preventDefault(); z.classList.add("over"); });
+    z.addEventListener("dragleave", ()=>z.classList.remove("over"));
+    z.addEventListener("drop", e=>{ e.preventDefault(); z.classList.remove("over"); const id = +e.dataTransfer.getData("text/plain"); place(id, z.dataset.bin); });
+  });
+  $("#chk", body).addEventListener("click", ()=>{
+    if(items.some(it=>!it.place)){ toast("Place every card first."); return; }
+    let wrong = 0;
+    items.forEach(it=>{
+      if(it.locked) return;
+      const ok = it.place === it.bin;
+      if(!it.tried){ rec(ok); log("sort", st.id + ": " + it.t, ok); it.tried = true; }
+      if(ok){ it.locked = true; it.state = "right"; } else { it.state = "wrong"; wrong++; }
+    });
+    sel = null; draw();
+    const fb = $("#sfb", body);
+    if(wrong===0){
+      fb.className = "fb show good"; fb.innerHTML = "✓ All correct! " + (st.success||"");
+      $("#chk", body).disabled = true; done();
+    } else {
+      fb.className = "fb show bad"; fb.innerHTML = `${wrong} card${wrong>1?"s are":" is"} in the wrong place (red). Move ${wrong>1?"them":"it"} and check again.`;
+    }
+  });
+  draw();
+};
+
+STEP.tap = (st, body, done)=>{
+  let pi = 0, tries = 0;
+  body.innerHTML = `<div class="steplabel">${esc(st.label||"Find the clues")}</div>
+    <div class="board">${st.prompts.map((p,i)=>`<div class="slot" id="slot${i}" style="--c:${p.color}"><div class="slothead">${p.icon} ${esc(p.label)}</div><div class="slotbody">not found yet</div></div>`).join("")}</div>
+    <div class="tapq" id="tapq"></div>
+    <div class="story tapmode">${storyHTML(st.story)}</div>`;
+  const q = $("#tapq", body);
+  function show(lastExp){
+    $$(".slot", body).forEach((s,i)=>s.classList.toggle("active", i===pi));
+    if(pi >= st.prompts.length){
+      q.innerHTML = `<div>✓ ${esc(st.after||"All clues found!")}</div>${lastExp?`<div class="exp">${esc(lastExp)}</div>`:""}`;
+      return;
+    }
+    const p = st.prompts[pi];
+    q.innerHTML = `<div><b>${p.icon} ${esc(p.label)}:</b> ${esc(p.q)}</div>${tries>=1?`<div class="hint">💡 Hint: ${esc(p.hint)}</div>`:""}${lastExp?`<div class="exp">✓ ${esc(lastExp)}</div>`:""}`;
+  }
+  $$(".snt", body).forEach(s=>s.addEventListener("click", e=>{
+    if(e.target.closest(".gl")) return;
+    if(pi >= st.prompts.length) return;
+    const p = st.prompts[pi];
+    const ks = (s.dataset.k||"").split(" ");
+    const ok = p.accept.some(a=>ks.includes(a));
+    if(tries===0){ rec(ok); log("clue", st.id + ": " + p.label, ok, null, s.textContent); }
+    if(ok){
+      s.classList.add("marked"); s.style.setProperty("--c", p.color);
+      const slot = $("#slot"+pi, body);
+      slot.classList.add("filled");
+      $(".slotbody", slot).textContent = "“" + s.textContent.trim().replace(/^“|”$/g,"") + "”";
+      pi++; tries = 0;
+      show(p.exp);
+      if(pi >= st.prompts.length) done();
+    } else {
+      tries++;
+      s.classList.add("nope"); setTimeout(()=>s.classList.remove("nope"), 600);
+      show();
+    }
+  }));
+  show();
+};
+
+STEP.judge = (st, body, done)=>{
+  const rows = st.items.map((it,i)=>({...it, i, first:true, done:false}));
+  body.innerHTML = `<div class="steplabel">${esc(st.label||"")}</div>
+    <div class="prompt">${esc(st.q)}</div>
+    <div class="small" style="margin-bottom:12px">Use 📖 Reread to check the story. Use the flip cards you learned: topic · summary · bossy · stuck.</div>
+    ${rows.map(r=>`<div class="jrow" id="jr${r.i}"><div class="jtext">“${esc(r.t)}”</div>
+      <div class="jbtns">${CATS.map(c=>`<button class="jb" data-r="${r.i}" data-c="${c.id}">${esc(c.l)}</button>`).join("")}</div>
+      <div class="jexp"></div></div>`).join("")}
+    <div class="fb" id="jfb"></div>`;
+  $$(".jb", body).forEach(b=>b.addEventListener("click", ()=>{
+    const r = rows[+b.dataset.r]; if(r.done) return;
+    const ok = b.dataset.c === r.a;
+    if(r.first){ rec(ok); log("judge", st.id + ": " + r.t, ok, null, b.dataset.c); r.first = false; }
+    const row = $("#jr"+r.i, body);
+    if(ok){
+      r.done = true; b.classList.add("right"); row.classList.add("done");
+      $$(".jb", row).forEach(x=>x.disabled = true);
+      $(".jexp", row).innerHTML = "✓ " + esc(r.exp);
+      if(rows.every(x=>x.done)){
+        const fb = $("#jfb", body); fb.className = "fb show good";
+        fb.innerHTML = "✓ All 10 judged! You can spot a strong theme statement and every trap.";
+        done();
+      }
+    } else {
+      b.classList.add("wrong"); b.disabled = true;
+      $(".jexp", row).innerHTML = "✗ Not quite. Ask yourself: Is it one word? Does it just retell? Does it give an order? Is it only about Jayden?";
+    }
+  }));
+};
+
+STEP.build = (st, body, done)=>{
+  let A = null, B = null, first = true, finished = false;
+  const as = shuffle(st.a.map((x,i)=>({...x,i}))), bs = shuffle(st.b.map((x,i)=>({...x,i})));
+  body.innerHTML = `<div class="steplabel">${esc(st.label||"")}</div>
+    <div class="prompt">${esc(st.q)}</div>
+    <div class="build" id="bview"></div>
+    <div class="cols">
+      <div class="col"><h4>Part 1 · the situation</h4>${as.map(x=>`<button class="chipbtn" data-col="a" data-i="${x.i}">${esc(x.t)}</button>`).join("")}</div>
+      <div class="col"><h4>Part 2 · what happens to people</h4>${bs.map(x=>`<button class="chipbtn" data-col="b" data-i="${x.i}">${esc(x.t)}</button>`).join("")}</div>
+    </div>
+    <button class="btn sea" id="bchk" style="margin-top:6px">Check my theme</button>
+    <div class="fb" id="bfb"></div>`;
+  function view(){
+    $("#bview", body).innerHTML = `${esc(st.start)} <span class="blank ${A===null?"empty":""}">${A===null?"_____":esc(st.a[A].t)}</span>${esc(st.mid)} <span class="blank ${B===null?"empty":""}">${B===null?"_____":esc(st.b[B].t)}</span>${esc(st.end)}`;
+    $$(".chipbtn", body).forEach(c=>c.classList.toggle("on", (c.dataset.col==="a"&&+c.dataset.i===A)||(c.dataset.col==="b"&&+c.dataset.i===B)));
+  }
+  $$(".chipbtn", body).forEach(c=>c.addEventListener("click", ()=>{
+    if(finished) return;
+    if(c.dataset.col==="a") A = +c.dataset.i; else B = +c.dataset.i;
+    $("#bfb", body).className = "fb"; $("#bfb", body).innerHTML = "";
+    view();
+  }));
+  $("#bchk", body).addEventListener("click", ()=>{
+    if(A===null || B===null){ toast("Choose one part from each column."); return; }
+    const a = st.a[A], b = st.b[B]; const ok = !!(a.ok && b.ok);
+    const sentence = `${st.start} ${a.t}${st.mid} ${b.t}${st.end}`;
+    if(first){ rec(ok); first = false; }
+    log("build", st.id, ok, null, sentence);
+    const fb = $("#bfb", body);
+    if(ok){
+      finished = true; fb.className = "fb show good"; fb.innerHTML = "✓ " + st.success;
+      $("#bchk", body).disabled = true; done();
+    } else {
+      fb.className = "fb show bad"; fb.innerHTML = "✗ " + (!a.ok ? a.fb : b.fb);
+    }
+  });
+  view();
+};
+
+STEP.multi = (st, body, done)=>{
+  const chosen = new Set(); let first = true; let finished = false;
+  const opts = shuffle(st.opts.map((o,i)=>({...o,i})));
+  body.innerHTML = `<div class="steplabel">${esc(st.label||"")}</div>
+    <div class="prompt">${esc(st.q)}</div>
+    <div>${opts.map(o=>`<button class="mopt" data-i="${o.i}"><span class="box"></span><span><span>${esc(o.t)}</span><span class="mfb"></span></span></button>`).join("")}</div>
+    <button class="btn sea" id="mchk">Check (<span id="mcount">0</span>/${st.n} chosen)</button>
+    <div class="fb" id="mfb"></div>`;
+  const btns = $$(".mopt", body);
+  function draw(){
+    btns.forEach(b=>{ const on = chosen.has(+b.dataset.i); b.classList.toggle("on", on); $(".box", b).textContent = on ? "✓" : ""; });
+    $("#mcount", body).textContent = chosen.size;
+  }
+  btns.forEach(b=>b.addEventListener("click", ()=>{
+    if(finished) return;
+    const i = +b.dataset.i;
+    btns.forEach(x=>{ x.classList.remove("wrong"); $(".mfb", x).textContent = ""; });
+    if(chosen.has(i)) chosen.delete(i);
+    else { if(chosen.size >= st.n){ toast(`You can choose ${st.n}. Unselect one first.`); return; } chosen.add(i); }
+    draw();
+  }));
+  $("#mchk", body).addEventListener("click", ()=>{
+    if(chosen.size !== st.n){ toast(`Choose exactly ${st.n}.`); return; }
+    const wrongPicks = [...chosen].filter(i=>!st.opts[i].ok);
+    const ok = wrongPicks.length === 0;
+    if(first){ rec(ok); first = false; }
+    log("multi", st.id, ok, null, [...chosen].map(i=>st.opts[i].t).join(" / "));
+    const fb = $("#mfb", body);
+    if(ok){
+      finished = true;
+      btns.forEach(b=>{ if(chosen.has(+b.dataset.i)) b.classList.add("right"); b.disabled = true; });
+      fb.className = "fb show good"; fb.innerHTML = "✓ " + st.success; $("#mchk", body).disabled = true; done();
+    } else {
+      wrongPicks.forEach(i=>{ const b = btns.find(x=>+x.dataset.i===i); b.classList.add("wrong"); $(".mfb", b).textContent = "✗ " + (st.opts[i].fb||"This one is a trap."); });
+      fb.className = "fb show bad"; fb.innerHTML = `${st.n - wrongPicks.length} of your choices are right. The red one${wrongPicks.length>1?"s are traps":" is a trap"}. Swap ${wrongPicks.length>1?"them":"it"} and check again.`;
+    }
+  });
+  draw();
+};
+
+function themeChecks(v, names){
+  const w = wc(v);
+  const low = " " + v.toLowerCase() + " ";
+  const bossy = /\b(you should|you must|should always|you need to|never|always|don['’]?t|do not)\b/i.test(v);
+  const named = names.some(n=>low.includes(n));
+  return [
+    {ok: w>=6, warn:false, t: w>=6 ? "✓ Full sentence" : "Full sentence (6+ words)"},
+    {ok: !bossy, warn: bossy, t: bossy ? "⚠ Sounds bossy (should / never / always / don’t)" : "✓ No orders"},
+    {ok: !named, warn: named, t: named ? "⚠ Uses a character name: make it about people" : "✓ About people in general"},
+    {ok: /[.!?]["”’]?\s*$/.test(v.trim()), warn:false, t: "✓ Ends with punctuation"}
+  ];
+}
+
+STEP.write = (st, body, done)=>{
+  body.innerHTML = `<div class="steplabel">${esc(st.label||"Write")}</div>
+    <div class="prompt">${esc(st.intro)}</div>
+    <div class="frames"><b>Sentence starters</b><ul>${st.frames.map(f=>`<li>${esc(f)}</li>`).join("")}</ul></div>
+    ${st.fields.map((f,i)=>`<div class="field">
+      <label for="wf${i}">${esc(f.label)}</label>
+      <div class="frame">${esc(f.frame)}</div>
+      <textarea id="wf${i}" data-i="${i}" spellcheck="true"></textarea>
+      ${f.check?`<div class="checks" id="ck${i}"></div>`:""}
+      <div class="wc" id="wc${i}">0 words · at least ${f.min}</div>
+    </div>`).join("")}
+    <button class="btn" id="wsub" disabled>Submit my writing</button>
+    <div class="fb" id="wfb"></div>`;
+  const tas = $$("textarea", body);
+  function update(){
+    let ready = true;
+    tas.forEach((ta,i)=>{
+      const f = st.fields[i]; const v = ta.value; const n = wc(v);
+      $("#wc"+i, body).textContent = `${n} word${n===1?"":"s"} · at least ${f.min}`;
+      if(n < f.min) ready = false;
+      if(f.check){
+        $("#ck"+i, body).innerHTML = themeChecks(v, st.names||[]).map(c=>`<span class="ck ${c.ok?"ok":c.warn?"warn":""}">${esc(c.t)}</span>`).join("");
+      }
+    });
+    $("#wsub", body).disabled = !ready;
+  }
+  tas.forEach(ta=>ta.addEventListener("input", update));
+  $("#wsub", body).addEventListener("click", ()=>{
+    const parts = tas.map((ta,i)=>`${st.fields[i].label}: ${ta.value.trim()}`);
+    const text = parts.join(" | ");
+    const totalWords = tas.reduce((s,ta)=>s+wc(ta.value),0);
+    log("writing", st.id, "", null, text, totalWords);
+    tas.forEach(ta=>ta.disabled = true);
+    $("#wsub", body).disabled = true;
+    const warnings = st.fields.some((f,i)=>f.check && themeChecks(tas[i].value, st.names||[]).some(c=>c.warn));
+    const fb = $("#wfb", body);
+    fb.className = "fb show good";
+    fb.innerHTML = `✓ Submitted! (${totalWords} words) Mr. V can see your writing.` + (warnings ? `<br><span class="small">Tip for next time: check the yellow warnings on your theme statement.</span>` : "");
+    done();
+  });
+  update();
+};
+
+/* =========================================================
+   BOOT
+   ========================================================= */
+renderStart();
+</script>
+</body>
+</html>
